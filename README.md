@@ -34,11 +34,12 @@ Transform async data source into a loader.
 
 ```tsx
 const Component = () => {
-    const { data, loading, error } = useFetch(url)
+    const { data, loading, error,  } = useFetch(url)
     const data$ = use$({ data, error, loading}, {
         ok: x => x.data,
         error x => x.error,
-        loading => x.loading
+        loading => x.loading,
+        skipped: () => !date && !loading && !error
     })
 
     const dataLength$ = usePipe$(data$, data => data.length)
@@ -75,7 +76,7 @@ function useQuery$<
       return v.loading;
     },
     error(v) {
-      return v.error ? v.error : fals``;
+      return v.error ? v.error : false;
     },
     ok(v) {
       return v;
